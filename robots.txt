@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nesesine-hub.github.io/pilotgaragecorlu/sitemap.xml
