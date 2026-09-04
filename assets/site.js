@@ -1,10 +1,10 @@
 /* =========================================================
-   Pilot Garage Çorlu Kervancı Oto Center — ortak script
+   Pilot Garage Çorlu Oto Ekspertiz Kervancı Oto Center — ortak script
    Bütün iletişim bilgileri SITE nesnesinden yönetilir.
    ========================================================= */
 
 const SITE = {
-  ad: "Pilot Garage Çorlu Kervancı Oto Center",
+  ad: "Pilot Garage Çorlu Oto Ekspertiz Kervancı Oto Center",
   telGorunen: "0546 713 66 56",
   telLink: "+905467136656",
   wa: "905467136656",
@@ -14,7 +14,7 @@ const SITE = {
   gunler: ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"]
 };
 
-const waLink = (msg) => `https://wa.me/${SITE.wa}?text=${encodeURIComponent(msg || `Merhaba, ${SITE.ad}'dan oto ekspertiz randevusu almak istiyorum.`)}`;
+const waLink = (msg) => `https://wa.me/${SITE.wa}?text=${encodeURIComponent(msg || `Merhaba, Pilot Garage Çorlu'dan oto ekspertiz randevusu almak istiyorum.`)}`;
 const MAP_LINK = `https://www.google.com/maps/dir/?api=1&destination=${SITE.konum.lat},${SITE.konum.lng}&destination_place_id=${SITE.konum.placeId}`;
 
 /* ---------- Paket verisi (tek kaynak) ---------- */
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (gonder) gonder.addEventListener("click", () => {
     const v = id => (document.getElementById(id)?.value || "").trim();
     const satir = [
-      `Merhaba, ${SITE.ad}'dan ekspertiz randevusu almak istiyorum.`, "",
+      `Merhaba, Pilot Garage Çorlu'dan ekspertiz randevusu almak istiyorum.`, "",
       v("fName") && `Ad soyad: ${v("fName")}`,
       v("fPhone") && `Telefon: ${v("fPhone")}`,
       v("fCar") && `Araç: ${v("fCar")}`,
