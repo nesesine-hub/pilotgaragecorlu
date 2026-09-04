@@ -113,6 +113,20 @@ ul,ol{margin:0;padding:0;list-style:none}
 .sv{display:flex;gap:2px}
 .sv svg{width:15px;height:15px;color:#E8A21A}
 
+
+/* Hero güven rozeti */
+.rozet{
+  display:inline-flex;align-items:center;gap:9px;margin-bottom:22px;
+  padding:8px 14px 8px 11px;background:var(--paper);
+  border:1px solid var(--line);border-radius:99px;
+  font-size:13.5px;font-weight:700;text-decoration:none;color:var(--ink);
+  transition:border-color .16s,background .16s;
+}
+.rozet:hover{border-color:var(--red);background:var(--red-soft)}
+.rozet svg{width:15px;height:15px;color:var(--red);flex:0 0 auto}
+.rozet span{font-weight:500;color:var(--steel);border-left:1px solid var(--line);padding-left:9px}
+@media (max-width:480px){.rozet span{display:none}}
+
 /* Rapor kartı */
 .report{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:20px 20px 16px}
 .report-hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px}
