@@ -301,6 +301,17 @@ table.cmp td a:hover{text-decoration:underline;text-underline-offset:3px}
 .dk.primary{background:var(--red);color:#fff}
 .dk.primary:hover{background:var(--red-dk)}
 
+/* Ara butonu: uzun aralıklarla tek bir yumuşak halka.
+   Zamanın %75'inde tamamen sakin, yalnızca kısa bir an nefes alıyor.
+   Yalnız ışık halkası büyür — kutu boyutu değişmez, sayfa oynamaz. */
+@keyframes dkPuls{
+  0%, 74%, 100%{box-shadow:0 0 0 0 rgba(225,18,28,0)}
+  80%{box-shadow:0 0 0 6px rgba(225,18,28,.30)}
+  92%{box-shadow:0 0 0 13px rgba(225,18,28,0)}
+}
+.dk.puls{animation:dkPuls 8s ease-out infinite}
+.dk.puls:hover,.dk.puls:focus-visible{animation:none}
+
 @media (max-width:900px){
   .dock{right:0;left:0;bottom:0;border-radius:0;padding:8px 8px calc(8px + env(safe-area-inset-bottom));gap:4px;background:rgba(21,23,27,.98)}
   .dk{flex:1 1 0;flex-direction:column;gap:5px;padding:9px 4px;font-size:11.5px;border-radius:8px;text-align:center}
