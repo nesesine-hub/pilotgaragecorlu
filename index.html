@@ -137,26 +137,53 @@
       <div class="report-hd"><b>Boya ve kaporta haritası</b><span>Örnek rapor</span></div>
       <div class="diagram">
         <svg viewBox="0 0 260 520" role="img" aria-label="Araç panellerinin orijinal, boyalı ve değişen olarak işaretlendiği örnek ekspertiz şeması">
-          <rect class="tyre" x="12" y="96" width="16" height="44" rx="3"/>
-          <rect class="tyre" x="232" y="96" width="16" height="44" rx="3"/>
-          <rect class="tyre" x="12" y="378" width="16" height="44" rx="3"/>
-          <rect class="tyre" x="232" y="378" width="16" height="44" rx="3"/>
-          <rect class="pnl" data-p="Ön tampon" x="40" y="22" width="180" height="32" rx="12"/>
-          <rect class="pnl" data-p="Motor kaputu" x="52" y="58" width="156" height="88" rx="10"/>
-          <rect class="glass" x="58" y="150" width="144" height="34" rx="8"/>
-          <rect class="pnl" data-p="Tavan" x="62" y="188" width="136" height="140" rx="7"/>
-          <rect class="glass" x="58" y="332" width="144" height="32" rx="8"/>
-          <rect class="pnl" data-p="Bagaj kapağı" x="52" y="368" width="156" height="86" rx="10"/>
-          <rect class="pnl" data-p="Arka tampon" x="40" y="458" width="180" height="32" rx="12"/>
-          <rect class="pnl" data-p="Sol ön çamurluk" x="26" y="60" width="24" height="88" rx="6"/>
-          <rect class="pnl" data-p="Sol ön kapı" x="26" y="152" width="24" height="96" rx="4"/>
-          <rect class="pnl" data-p="Sol arka kapı" x="26" y="252" width="24" height="96" rx="4"/>
-          <rect class="pnl" data-p="Sol arka çamurluk" x="26" y="352" width="24" height="100" rx="6"/>
-          <rect class="pnl" data-p="Sağ ön çamurluk" x="210" y="60" width="24" height="88" rx="6"/>
-          <rect class="pnl" data-p="Sağ ön kapı" x="210" y="152" width="24" height="96" rx="4"/>
-          <rect class="pnl" data-p="Sağ arka kapı" x="210" y="252" width="24" height="96" rx="4"/>
-          <rect class="pnl" data-p="Sağ arka çamurluk" x="210" y="352" width="24" height="100" rx="6"/>
-          <rect class="scan" id="scan" x="14" y="18" width="232" height="26" opacity="0"/>
+          <path class="pnl" data-p="Ön tampon" d="M108,14 C88,14 80,32 82,52 L90,94 L170,94 L178,52 C180,32 172,14 152,14 Z"/>
+          <path class="light" d="M92,40 L108,36 L110,50 L94,54 Z"/>
+          <path class="light" d="M168,40 L152,36 L150,50 L166,54 Z"/>
+          <path class="crease" d="M130,20 L130,90"/>
+
+          <path class="pnl" data-p="Motor kaputu" d="M96,96 L164,96 L168,140 L92,140 Z"/>
+          <path class="crease" d="M130,100 L130,138"/>
+          <path class="glass" d="M92,140 L168,140 L172,154 L88,154 Z"/>
+          <path class="pnl" data-p="Tavan" d="M88,156 Q82,262 88,368 L172,368 Q178,262 172,156 Z"/>
+          <path class="crease" d="M100,160 Q95,262 100,364"/>
+          <path class="crease" d="M160,160 Q165,262 160,364"/>
+          <path class="glass" d="M88,370 L172,370 L168,384 L92,384 Z"/>
+          <path class="pnl" data-p="Bagaj kapağı" d="M92,386 L168,386 L164,428 L96,428 Z"/>
+          <path class="crease" d="M130,390 L130,424"/>
+
+          <path class="pnl" data-p="Arka tampon" d="M92,430 L168,430 L176,468 C178,488 170,506 150,506 L110,506 C90,506 82,488 84,468 Z"/>
+          <path class="light-rear" d="M92,448 L108,452 L106,466 L90,462 Z"/>
+          <path class="light-rear" d="M168,448 L152,452 L154,466 L170,462 Z"/>
+          <path class="crease" d="M130,432 L130,502"/>
+
+          <path class="pnl" data-p="Sol ön çamurluk" d="M86,96 C60,96 46,108 44,128 L42,150 A22,22 0 0 0 42,168 L44,190 C46,204 60,210 84,210 L84,96 Z"/>
+          <path class="pnl" data-p="Sol ön kapı" d="M84,212 L44,212 L42,272 L84,276 Z"/>
+          <path class="crease" d="M50,220 L48,268"/>
+          <path class="pnl" data-p="Sol arka kapı" d="M84,278 L42,274 L44,336 C46,348 60,354 84,354 Z"/>
+          <path class="crease" d="M50,282 L48,346"/>
+          <path class="pnl" data-p="Sol arka çamurluk" d="M84,356 L60,354 C46,352 44,344 42,332 L42,314 A22,22 0 0 0 42,296 L44,270 L84,270 Z"/>
+          <circle class="tyre-outer" cx="24" cy="159" r="21"/>
+          <circle class="tyre-rim" cx="24" cy="159" r="12"/>
+          <circle class="tyre-hub" cx="24" cy="159" r="4"/>
+          <circle class="tyre-outer" cx="24" cy="305" r="21"/>
+          <circle class="tyre-rim" cx="24" cy="305" r="12"/>
+          <circle class="tyre-hub" cx="24" cy="305" r="4"/>
+
+          <path class="pnl" data-p="Sağ ön çamurluk" d="M174,96 C200,96 214,108 216,128 L218,150 A22,22 0 0 1 218,168 L216,190 C214,204 200,210 176,210 L176,96 Z"/>
+          <path class="pnl" data-p="Sağ ön kapı" d="M176,212 L216,212 L218,272 L176,276 Z"/>
+          <path class="crease" d="M210,220 L212,268"/>
+          <path class="pnl" data-p="Sağ arka kapı" d="M176,278 L218,274 L216,336 C214,348 200,354 176,354 Z"/>
+          <path class="crease" d="M210,282 L212,346"/>
+          <path class="pnl" data-p="Sağ arka çamurluk" d="M176,356 L200,354 C214,352 216,344 218,332 L218,314 A22,22 0 0 1 218,296 L216,270 L176,270 Z"/>
+          <circle class="tyre-outer" cx="236" cy="159" r="21"/>
+          <circle class="tyre-rim" cx="236" cy="159" r="12"/>
+          <circle class="tyre-hub" cx="236" cy="159" r="4"/>
+          <circle class="tyre-outer" cx="236" cy="305" r="21"/>
+          <circle class="tyre-rim" cx="236" cy="305" r="12"/>
+          <circle class="tyre-hub" cx="236" cy="305" r="4"/>
+
+          <rect class="scan" id="scan" x="4" y="10" width="252" height="26" opacity="0"/>
         </svg>
       </div>
       <div class="legend">

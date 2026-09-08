@@ -247,16 +247,17 @@ function kurTarama(){
 
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return bitir();
 
-  let y = 18;
+  let y = 10;
   scan.setAttribute("opacity", "1");
   const t = setInterval(() => {
     y += 9;
     scan.setAttribute("y", y);
     paneller.forEach(p => {
-      if (!p.dataset.state && (+p.getAttribute("y") + +p.getAttribute("height")) < y + 26) {
-        p.dataset.state = durum[p.dataset.p];
+      if (!p.dataset.state) {
+        const bb = p.getBBox();
+        if (bb.y + bb.height < y + 26) p.dataset.state = durum[p.dataset.p];
       }
     });
-    if (y > 500) { clearInterval(t); bitir(); }
+    if (y > 510) { clearInterval(t); bitir(); }
   }, 16);
 }
