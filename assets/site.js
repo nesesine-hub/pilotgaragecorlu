@@ -183,29 +183,47 @@ document.addEventListener("DOMContentLoaded", () => {
   kurTarama();
 });
 
-/* ---------- Galeri ----------
-   Fotoğrafları /gorseller klasörüne atıp aşağıdaki listeyi doldurun.
-   Örn: { src:"gorseller/bayi-01.jpg", alt:"Ekspertiz alanı", baslik:"Lift ve ölçüm alanı" }
------------------------------------------------------------------- */
-const GALERI = [
-  { baslik: "Bayi girişi ve karşılama" },
-  { baslik: "Ekspertiz alanı ve lift" },
-  { baslik: "Fren ve süspansiyon test yatağı" },
-  { baslik: "Dyno motor performans testi" },
-  { baslik: "OBD arıza tespit istasyonu" },
-  { baslik: "Boya kalınlığı mikron ölçümü" },
-  { baslik: "Raporlama ve teslim masası" },
-  { baslik: "Müşteri bekleme alanı" },
-  { baslik: "Kervancı Oto Center dış cephe" }
-];
-
+/* ---------- Galeri büyütme (lightbox) ---------- */
 function kurGaleri(){
-  const g = document.getElementById("galeri");
-  if (!g) return;
-  g.innerHTML = GALERI.map(x => x.src
-    ? `<figure class="gi"><img src="${x.src}" alt="${x.alt || x.baslik}" loading="lazy"><figcaption>${x.baslik}</figcaption></figure>`
-    : `<figure class="gi ph"><svg><use href="#i-cam"></use></svg><span>${x.baslik}</span></figure>`
-  ).join("");
+  const baglar = [...document.querySelectorAll("[data-buyut]")];
+  if (!baglar.length) return;
+
+  const kutu = document.createElement("div");
+  kutu.className = "lightbox";
+  kutu.setAttribute("role", "dialog");
+  kutu.setAttribute("aria-modal", "true");
+  kutu.innerHTML = `
+    <button class="kapat" aria-label="Kapat">&times;</button>
+    <button class="ok onceki" aria-label="Önceki fotoğraf">&#8249;</button>
+    <figure style="margin:0"><img alt=""><figcaption></figcaption></figure>
+    <button class="ok sonraki" aria-label="Sonraki fotoğraf">&#8250;</button>`;
+  document.body.appendChild(kutu);
+
+  const gorsel = kutu.querySelector("img");
+  const yazi = kutu.querySelector("figcaption");
+  let sira = 0;
+
+  const goster = i => {
+    sira = (i + baglar.length) % baglar.length;
+    const b = baglar[sira];
+    gorsel.src = b.getAttribute("href");
+    gorsel.alt = b.querySelector("img")?.alt || "";
+    yazi.textContent = b.closest("figure")?.querySelector("figcaption")?.textContent || "";
+  };
+  const ac = i => { goster(i); kutu.classList.add("on"); document.body.style.overflow = "hidden"; };
+  const kapat = () => { kutu.classList.remove("on"); document.body.style.overflow = ""; };
+
+  baglar.forEach((b, i) => b.addEventListener("click", e => { e.preventDefault(); ac(i); }));
+  kutu.querySelector(".kapat").addEventListener("click", kapat);
+  kutu.querySelector(".onceki").addEventListener("click", () => goster(sira - 1));
+  kutu.querySelector(".sonraki").addEventListener("click", () => goster(sira + 1));
+  kutu.addEventListener("click", e => { if (e.target === kutu) kapat(); });
+  addEventListener("keydown", e => {
+    if (!kutu.classList.contains("on")) return;
+    if (e.key === "Escape") kapat();
+    if (e.key === "ArrowLeft") goster(sira - 1);
+    if (e.key === "ArrowRight") goster(sira + 1);
+  });
 }
 
 /* ---------- Hero: boya haritası taraması ---------- */

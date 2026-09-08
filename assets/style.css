@@ -250,6 +250,38 @@ table.cmp td a:hover{text-decoration:underline;text-underline-offset:3px}
 .gi.ph svg{width:34px;height:34px;color:#B6BBC1}
 .gi.ph span{font-size:13.5px;text-align:center;padding:0 14px}
 
+
+/* ---------------- Fotoğraf bandı (anasayfa) ---------------- */
+.foto-band{margin-top:36px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px}
+.fb{margin:0;position:relative;overflow:hidden;border:1px solid var(--line);background:var(--paper)}
+.fb img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;transition:transform .5s ease}
+.fb-buyuk img{aspect-ratio:16/11}
+.fb:hover img{transform:scale(1.035)}
+.fb figcaption{position:absolute;left:0;right:0;bottom:0;padding:30px 14px 12px;color:#fff;font-size:14px;font-weight:600;background:linear-gradient(transparent,rgba(21,23,27,.88))}
+
+/* ---------------- Galeri büyütme ---------------- */
+.gi a{display:block;width:100%;height:100%}
+.gi img{transition:transform .5s ease}
+.gi:hover img{transform:scale(1.04)}
+.lightbox{position:fixed;inset:0;z-index:120;background:rgba(12,13,16,.94);display:none;align-items:center;justify-content:center;padding:24px}
+.lightbox.on{display:flex}
+.lightbox img{max-width:100%;max-height:88vh;object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lightbox .kapat{position:absolute;top:18px;right:20px;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:26px;line-height:1;cursor:pointer}
+.lightbox .kapat:hover{background:var(--red)}
+.lightbox .ok{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:24px;cursor:pointer}
+.lightbox .ok:hover{background:var(--red)}
+.lightbox .onceki{left:16px}
+.lightbox .sonraki{right:16px}
+.lightbox figcaption{position:absolute;bottom:22px;left:0;right:0;text-align:center;color:#C6CBD1;font-size:14.5px;padding:0 70px}
+@media (max-width:1040px){
+  .foto-band{grid-template-columns:1fr 1fr}
+  .fb-buyuk{grid-column:1/-1}
+}
+@media (max-width:620px){
+  .foto-band{grid-template-columns:1fr}
+  .lightbox .ok{width:40px;height:40px}
+}
+
 /* ---------------- Randevu / form ---------------- */
 .bk{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
 .form{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:28px}
