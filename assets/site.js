@@ -180,7 +180,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   kurGaleri();
-  kurTarama();
 });
 
 /* ---------- Galeri büyütme (lightbox) ---------- */
@@ -224,40 +223,4 @@ function kurGaleri(){
     if (e.key === "ArrowLeft") goster(sira - 1);
     if (e.key === "ArrowRight") goster(sira + 1);
   });
-}
-
-/* ---------- Hero: boya haritası taraması ---------- */
-function kurTarama(){
-  const paneller = [...document.querySelectorAll(".pnl")];
-  const scan = document.getElementById("scan");
-  const ozet = document.getElementById("rptSum");
-  if (!paneller.length || !scan) return;
-
-  const durum = {};
-  paneller.forEach(p => durum[p.dataset.p] = "ok");
-  durum["Sağ ön çamurluk"] = "paint";
-  durum["Ön tampon"] = "paint";
-  durum["Sağ ön kapı"] = "rep";
-
-  const bitir = () => {
-    paneller.forEach(p => p.dataset.state = durum[p.dataset.p]);
-    scan.setAttribute("opacity", "0");
-    if (ozet) ozet.textContent = "Bu örnekte 2 boyalı, 1 değişen parça var. Kendi aracınızın haritasını ekspertiz sonunda alırsınız.";
-  };
-
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return bitir();
-
-  let y = 10;
-  scan.setAttribute("opacity", "1");
-  const t = setInterval(() => {
-    y += 9;
-    scan.setAttribute("y", y);
-    paneller.forEach(p => {
-      if (!p.dataset.state) {
-        const bb = p.getBBox();
-        if (bb.y + bb.height < y + 26) p.dataset.state = durum[p.dataset.p];
-      }
-    });
-    if (y > 510) { clearInterval(t); bitir(); }
-  }, 16);
 }
