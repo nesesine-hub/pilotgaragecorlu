@@ -17,6 +17,12 @@ const SITE = {
 const waLink = (msg) => `https://wa.me/${SITE.wa}?text=${encodeURIComponent(msg || `Merhaba, Pilot Garage Çorlu'dan oto ekspertiz randevusu almak istiyorum.`)}`;
 const MAP_LINK = `https://www.google.com/maps/dir/?api=1&destination=${SITE.konum.lat},${SITE.konum.lng}&destination_place_id=${SITE.konum.placeId}`;
 
+/* ---------- Dönüşüm izleme ----------
+   Google Tag Manager kurulunca GTM konteynerine bu dataLayer olaylarına
+   bağlı tetikleyiciler eklenir; site kodunda tekrar değişiklik gerekmez. */
+window.dataLayer = window.dataLayer || [];
+const izle = (event, extra) => window.dataLayer.push({ event, ...extra });
+
 /* ---------- Paket verisi (tek kaynak) ---------- */
 const PAKETLER = [
   { slug:"dyno-motor-performans", ad:"DYNO MOTOR PERFORMANS PAKETİ", nokta:7, fiyat:"2.500 ₺", tur:"odakli", ikon:"i-dyno",
@@ -111,10 +117,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[data-tel]").forEach(a => {
     a.href = "tel:" + SITE.telLink;
     if (a.dataset.tel === "text") a.textContent = SITE.telGorunen;
+    a.addEventListener("click", () => izle("tel_tikla"));
   });
   document.querySelectorAll("[data-wa]").forEach(a => {
     a.href = waLink(a.dataset.wa || "");
     a.target = "_blank"; a.rel = "noopener";
+    a.addEventListener("click", () => izle("whatsapp_tikla"));
   });
   document.querySelectorAll("[data-map]").forEach(a => {
     a.href = MAP_LINK; a.target = "_blank"; a.rel = "noopener";
@@ -176,6 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
       `Saat tercihi: ${v("fTime")}`,
       v("fNote") && `Not: ${v("fNote")}`
     ].filter(Boolean);
+    izle("randevu_formu_gonder", { paket: v("fPkg") });
     window.open(waLink(satir.join("\n")), "_blank", "noopener");
   });
 
