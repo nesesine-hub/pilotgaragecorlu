@@ -32,17 +32,40 @@
     a.addEventListener("click", () => izle("whatsapp_tikla"));
   };
 
-  // mevcut paketin fiyatını sayfadaki her yerde günceller
-  const fiyatYaz = p => {
-    const kart = document.getElementById(p.slug)?.querySelector(".price b");
-    if (kart) kart.textContent = p.fiyat;
+  // mevcut paketin adını, özellik sayısını, açıklamasını ve fiyatını sayfadaki her yerde günceller
+  const paketYaz = p => {
+    const yaz = (kok, secici, deger) => { const e = kok?.querySelector(secici); if (e) e.textContent = deger; };
+    const wa = kok => kok?.querySelectorAll("[data-wa]").forEach(a => { a.dataset.wa = waMesaj(p.ad); a.href = waLink(a.dataset.wa); });
 
-    const satir = document.querySelector(`table.cmp a[href="#${p.slug}"]`)?.closest("tr")?.querySelector(".pr");
-    if (satir) satir.textContent = p.fiyat;
+    // kart (anasayfa ve paketler)
+    const kart = document.getElementById(p.slug);
+    if (kart?.matches(".pk")) {
+      yaz(kart, "h3", p.ad); yaz(kart, ".pts b", p.nokta); yaz(kart, ".d", p.aciklama); yaz(kart, ".price b", p.fiyat);
+      wa(kart);
+    }
 
-    document.querySelectorAll(".acc-b .cnt").forEach(c => {
-      if (c.parentElement.textContent.replace(c.textContent, "").trim() === p.ad) c.textContent = p.fiyat;
-    });
+    // karşılaştırma tablosu
+    const bag = document.querySelector(`table.cmp a[href="#${p.slug}"]`);
+    if (bag) {
+      const satir = bag.closest("tr");
+      bag.textContent = p.ad; yaz(satir, ".num", p.nokta); yaz(satir, ".pr", p.fiyat);
+      wa(satir);
+    }
+
+    // kapsam akordeonu: ilk seferde HTML'deki adla bulunur, sonra işaretinden
+    const dugme = [...document.querySelectorAll(".acc-b")].find(b => b.dataset.slug === p.slug
+      || (!b.dataset.slug && b.querySelector(".cnt") && b.textContent.replace(b.querySelector(".cnt").textContent, "").trim() === p.htmlAd));
+    if (dugme) {
+      dugme.dataset.slug = p.slug;
+      const yazi = [...dugme.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+      if (yazi) yazi.textContent = p.ad;
+      yaz(dugme, ".cnt", p.fiyat);
+      yaz(document.getElementById(dugme.getAttribute("aria-controls")), "p", p.aciklama);
+    }
+
+    // randevu formundaki seçenek
+    const secenek = [...document.querySelectorAll("#fPkg option")].find(o => o.dataset.slug === p.slug || (!o.dataset.slug && o.textContent === p.htmlAd));
+    if (secenek) { secenek.dataset.slug = p.slug; secenek.textContent = p.ad; }
   };
 
   // admin panelinden eklenen paketi paketler sayfasına ve randevu formuna ekler
@@ -98,7 +121,14 @@
     const ekler = [];
     liste.filter(k => k.fiyat > 0).sort((a, b) => (a.sira || 0) - (b.sira || 0)).forEach(k => {
       const p = PAKETLER.find(x => x.slug === k.slug);
-      if (p) { p.fiyat = tl(k.fiyat); fiyatYaz(p); }
+      if (p) {
+        p.htmlAd ??= p.ad;
+        p.fiyat = tl(k.fiyat);
+        if (k.ad) p.ad = k.ad;
+        if (k.nokta >= 0) p.nokta = k.nokta;
+        if (k.aciklama) p.aciklama = k.aciklama;
+        paketYaz(p);
+      }
       else if (k.ad && /^ek-[a-z0-9-]+$/.test(k.slug)) { yeniPaket(k); ekler.push(k); }
     });
     semaYaz(ekler);
