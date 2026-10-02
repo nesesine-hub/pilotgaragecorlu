@@ -1,0 +1,28 @@
+rules_version = '2';
+
+// Firebase konsolu → Firestore Database → Kurallar sekmesine yapıştırın.
+// Fiyatları herkes okur; yalnızca bayi hesabı yazar.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function bayi() {
+      return request.auth != null
+        && request.auth.token.email in ['pilotgrg59@gmail.com'];
+    }
+
+    function gecerli(d) {
+      return d.keys().hasOnly(['ad', 'nokta', 'aciklama', 'fiyat', 'sira'])
+        && d.fiyat is number && d.fiyat > 0 && d.fiyat < 1000000
+        && (!('ad' in d) || (d.ad is string && d.ad.size() > 0 && d.ad.size() <= 60))
+        && (!('aciklama' in d) || (d.aciklama is string && d.aciklama.size() <= 400))
+        && (!('nokta' in d) || (d.nokta is int && d.nokta >= 0 && d.nokta <= 5000));
+    }
+
+    match /paketler/{slug} {
+      allow read: if true;
+      allow create, update: if bayi() && gecerli(request.resource.data);
+      // yalnızca panelden eklenen paketler silinebilir
+      allow delete: if bayi() && slug.matches('ek-.*');
+    }
+  }
+}
