@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Fiyat Yönetimi | Pilot Garage Çorlu</title>
+<meta name="theme-color" content="#15171B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..800;1,62..125,400..700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/gorseller/favicon-32.png">
+<link rel="stylesheet" href="/assets/style.css">
+<style>
+  .adm{max-width:760px;margin:0 auto;padding:28px 16px 80px}
+  .adm-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
+  .adm-top img{height:26px;width:auto}
+  .adm h1{font-size:26px;margin-bottom:6px}
+  .adm h2{font-size:19px;margin-bottom:4px}
+  .adm .not{color:var(--steel);font-size:15px}
+  .kutu{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:22px;margin-top:20px}
+  .alan{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+  .alan label{font-size:14px;font-weight:700}
+  .alan input,.alan textarea,.satir input{font:inherit;padding:11px 12px;border:1px solid var(--line);border-radius:var(--r);background:#fff;color:var(--ink);width:100%}
+  .alan textarea{min-height:110px;resize:vertical}
+  .satir{display:grid;grid-template-columns:1fr 150px;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+  .satir:first-of-type{border-top:0}
+  .satir b{font-size:15.5px;display:block;line-height:1.25}
+  .satir small{color:var(--steel);font-size:13px}
+  .satir .tl{position:relative}
+  .satir .tl input{padding-right:30px;text-align:right;font-weight:700}
+  .satir .tl::after{content:"₺";position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--steel)}
+  .satir.degisti .tl input{border-color:var(--warn);background:#FFF9EC}
+  .sil{display:block;background:none;border:0;color:var(--red);font:inherit;font-size:14px;text-decoration:underline;cursor:pointer;padding:4px 0 0}
+  .adm .btn{margin-top:18px;border:0;cursor:pointer;font:inherit;font-weight:700}
+  .adm .btn[disabled]{opacity:.5;cursor:default}
+  .baglanti{background:none;border:0;font:inherit;font-size:14px;color:var(--steel);text-decoration:underline;cursor:pointer;padding:0}
+  .durum{margin-top:14px;font-size:15px;min-height:1.6em}
+  .durum.ok{color:var(--ok)} .durum.hata{color:var(--red)}
+  [hidden]{display:none!important}
+  @media (max-width:520px){.satir{grid-template-columns:1fr 120px}}
+</style>
+</head>
+<body>
+<main class="adm">
+  <div class="adm-top">
+    <img src="/gorseller/pilot-garage-logo.png" alt="Pilot Garage" width="828" height="120">
+    <button class="baglanti" id="cikis" hidden>Çıkış yap</button>
+  </div>
+
+  <!-- Giriş -->
+  <section id="giris">
+    <h1>Fiyat yönetimi</h1>
+    <p class="not">Paket fiyatlarını değiştirmek için giriş yapın.</p>
+    <form class="kutu" id="girisForm">
+      <div class="alan" style="margin-top:0"><label for="eposta">E-posta</label><input id="eposta" type="email" autocomplete="username" required></div>
+      <div class="alan"><label for="sifre">Şifre</label><input id="sifre" type="password" autocomplete="current-password" required></div>
+      <button class="btn" type="submit">Giriş yap</button>
+      <p style="margin-top:14px"><button class="baglanti" type="button" id="unuttum">Şifremi unuttum</button></p>
+      <p class="durum" id="girisDurum" role="status"></p>
+    </form>
+  </section>
+
+  <!-- Panel -->
+  <section id="panel" hidden>
+    <h1>Fiyat yönetimi</h1>
+    <p class="not">Fiyatı değiştirip “Fiyatları kaydet”e basın. Değişiklik sitede hemen görünür.</p>
+
+    <div class="kutu">
+      <h2>Paket fiyatları</h2>
+      <p class="not">Sadece rakam yazın, örneğin 8500.</p>
+      <div id="liste" style="margin-top:10px"></div>
+      <button class="btn" id="kaydet" disabled>Fiyatları kaydet</button>
+      <p class="durum" id="kaydetDurum" role="status"></p>
+    </div>
+
+    <form class="kutu" id="ekleForm">
+      <h2>Yeni paket ekle</h2>
+      <p class="not">Eklenen paket, Paketler sayfasında ve randevu formunda görünür.</p>
+      <div class="alan"><label for="yAd">Paket adı</label><input id="yAd" maxlength="60" required></div>
+      <div class="alan"><label for="yNokta">Paket özelliği sayısı</label><input id="yNokta" type="number" inputmode="numeric" min="0" max="5000" step="1" required></div>
+      <div class="alan"><label for="yAciklama">Açıklama</label><textarea id="yAciklama" maxlength="400" required></textarea></div>
+      <div class="alan"><label for="yFiyat">Fiyat (₺)</label><input id="yFiyat" type="number" inputmode="numeric" min="1" max="999999" step="1" required></div>
+      <button class="btn" type="submit">Paketi ekle</button>
+      <p class="durum" id="ekleDurum" role="status"></p>
+    </form>
+  </section>
+
+  <p class="kutu durum hata" id="ayarYok" hidden>Fiyat yönetimi henüz kurulmadı: assets/firebase-config.js dosyası boş.</p>
+</main>
+
+<script src="/assets/firebase-config.js"></script>
+<script src="/assets/site.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const $ = id => document.getElementById(id);
+const durum = (el, yazi, tur) => { el.textContent = yazi; el.className = "durum" + (tur ? " " + tur : ""); };
+
+if (!FIREBASE.projectId || !FIREBASE.apiKey) {
+  $("giris").hidden = true;
+  $("ayarYok").hidden = false;
+  throw new Error("firebase-config.js boş");
+}
+
+const app = initializeApp(FIREBASE);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const HATALAR = {
+  "auth/invalid-credential": "E-posta ya da şifre hatalı.",
+  "auth/wrong-password": "E-posta ya da şifre hatalı.",
+  "auth/user-not-found": "E-posta ya da şifre hatalı.",
+  "auth/invalid-email": "E-posta adresi geçersiz.",
+  "auth/too-many-requests": "Çok fazla deneme yapıldı. Biraz bekleyip tekrar deneyin.",
+  "auth/network-request-failed": "İnternet bağlantısı kurulamadı.",
+  "permission-denied": "Bu hesabın fiyat değiştirme yetkisi yok."
+};
+const hataYazisi = e => HATALAR[e.code] || "Bir sorun oluştu, tekrar deneyin.";
+
+/* ---------- Giriş ---------- */
+$("girisForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  durum($("girisDurum"), "Giriş yapılıyor…");
+  try { await signInWithEmailAndPassword(auth, $("eposta").value.trim(), $("sifre").value); }
+  catch (err) { durum($("girisDurum"), hataYazisi(err), "hata"); }
+});
+
+$("unuttum").addEventListener("click", async () => {
+  const eposta = $("eposta").value.trim();
+  if (!eposta) return durum($("girisDurum"), "Önce e-posta adresinizi yazın.", "hata");
+  try {
+    await sendPasswordResetEmail(auth, eposta);
+    durum($("girisDurum"), "Şifre yenileme bağlantısı e-posta adresinize gönderildi.", "ok");
+  } catch (err) { durum($("girisDurum"), hataYazisi(err), "hata"); }
+});
+
+$("cikis").addEventListener("click", () => signOut(auth));
+
+onAuthStateChanged(auth, kullanici => {
+  $("giris").hidden = !!kullanici;
+  $("panel").hidden = !kullanici;
+  $("cikis").hidden = !kullanici;
+  if (kullanici) { durum($("girisDurum"), ""); $("sifre").value = ""; yukle(); }
+});
+
+/* ---------- Fiyat listesi ---------- */
+const rakam = f => Number(String(f).replace(/\D/g, ""));
+let satirlar = [];   // { slug, ad, nokta, fiyat, ek }
+
+async function yukle() {
+  durum($("kaydetDurum"), "Yükleniyor…");
+  try {
+    const kayit = {};
+    (await getDocs(collection(db, "paketler"))).forEach(d => kayit[d.id] = d.data());
+
+    const sabit = PAKETLER.map(p => ({ slug: p.slug, ad: p.ad, nokta: p.nokta, fiyat: kayit[p.slug]?.fiyat || rakam(p.fiyat) }));
+    const ek = Object.entries(kayit)
+      .filter(([slug, k]) => !PAKETLER.some(p => p.slug === slug) && k.ad)
+      .sort((a, b) => (a[1].sira || 0) - (b[1].sira || 0))
+      .map(([slug, k]) => ({ slug, ad: k.ad, nokta: k.nokta, fiyat: k.fiyat, ek: true }));
+
+    satirlar = [...sabit, ...ek];
+    ciz();
+    durum($("kaydetDurum"), "");
+  } catch (err) { durum($("kaydetDurum"), hataYazisi(err), "hata"); }
+}
+
+function ciz() {
+  const liste = $("liste");
+  liste.textContent = "";
+  satirlar.forEach(s => {
+    const satir = document.createElement("div");
+    satir.className = "satir";
+
+    const ad = document.createElement("div");
+    const b = document.createElement("b"); b.textContent = s.ad;
+    const k = document.createElement("small"); k.textContent = `${s.nokta} paket özelliği` + (s.ek ? " · sonradan eklendi" : "");
+    ad.append(b, k);
+
+    const tl = document.createElement("div"); tl.className = "tl";
+    const giris = document.createElement("input");
+    giris.type = "number"; giris.inputMode = "numeric"; giris.min = 1; giris.max = 999999; giris.step = 1;
+    giris.value = s.fiyat; giris.setAttribute("aria-label", `${s.ad} fiyatı`);
+    giris.addEventListener("input", () => {
+      s.yeni = Number(giris.value);
+      satir.classList.toggle("degisti", s.yeni !== s.fiyat);
+      $("kaydet").disabled = !satirlar.some(x => x.yeni !== undefined && x.yeni !== x.fiyat);
+      durum($("kaydetDurum"), "");
+    });
+    tl.append(giris);
+    satir.append(ad, tl);
+
+    if (s.ek) {
+      const sil = document.createElement("button");
+      sil.type = "button"; sil.className = "sil"; sil.textContent = "Paketi sil";
+      sil.addEventListener("click", async () => {
+        if (!confirm(`“${s.ad}” paketi siteden kaldırılsın mı?`)) return;
+        try { await deleteDoc(doc(db, "paketler", s.slug)); await yukle(); durum($("kaydetDurum"), "Paket silindi.", "ok"); }
+        catch (err) { durum($("kaydetDurum"), hataYazisi(err), "hata"); }
+      });
+      ad.append(sil);
+    }
+    liste.append(satir);
+  });
+  $("kaydet").disabled = true;
+}
+
+$("kaydet").addEventListener("click", async () => {
+  const degisen = satirlar.filter(s => s.yeni !== undefined && s.yeni !== s.fiyat);
+  if (degisen.some(s => !(s.yeni > 0) || !Number.isInteger(s.yeni)))
+    return durum($("kaydetDurum"), "Fiyatlar sıfırdan büyük tam sayı olmalı.", "hata");
+
+  $("kaydet").disabled = true;
+  durum($("kaydetDurum"), "Kaydediliyor…");
+  try {
+    const toplu = writeBatch(db);
+    degisen.forEach(s => toplu.set(doc(db, "paketler", s.slug), { fiyat: s.yeni }, { merge: true }));
+    await toplu.commit();
+    await yukle();
+    durum($("kaydetDurum"), "Fiyatlar kaydedildi. Sitede hemen görünür.", "ok");
+  } catch (err) {
+    $("kaydet").disabled = false;
+    durum($("kaydetDurum"), hataYazisi(err), "hata");
+  }
+});
+
+/* ---------- Yeni paket ---------- */
+const slugYap = ad => "ek-" + ad.toLocaleLowerCase("tr-TR")
+  .replace(/[çğıöşü]/g, c => ({ "ç":"c", "ğ":"g", "ı":"i", "ö":"o", "ş":"s", "ü":"u" }[c]))
+  .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
+$("ekleForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const ad = $("yAd").value.trim();
+  const slug = slugYap(ad);
+  if (slug === "ek-") return durum($("ekleDurum"), "Paket adında en az bir harf ya da rakam olmalı.", "hata");
+  if (satirlar.some(s => s.slug === slug || s.ad.toLocaleLowerCase("tr-TR") === ad.toLocaleLowerCase("tr-TR")))
+    return durum($("ekleDurum"), "Bu adla bir paket zaten var.", "hata");
+
+  durum($("ekleDurum"), "Ekleniyor…");
+  try {
+    await setDoc(doc(db, "paketler", slug), {
+      ad,
+      nokta: Math.round(Number($("yNokta").value)),
+      aciklama: $("yAciklama").value.trim(),
+      fiyat: Math.round(Number($("yFiyat").value)),
+      sira: Date.now()
+    });
+    e.target.reset();
+    await yukle();
+    durum($("ekleDurum"), "Paket eklendi. Sitede hemen görünür.", "ok");
+  } catch (err) { durum($("ekleDurum"), hataYazisi(err), "hata"); }
+});
+</script>
+</body>
+</html>
