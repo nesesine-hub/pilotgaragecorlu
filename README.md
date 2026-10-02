@@ -1,5 +1,5 @@
 # Pilot Garage Çorlu Kervancı Oto Center
-
+ 
 Çorlu oto ekspertiz bayisinin kurumsal web sitesi. Statik HTML/CSS/JS — derleme adımı,
 bağımlılık ve build aracı yok. Depoyu GitHub Pages'e bağlamak yeterli.
 
